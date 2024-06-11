@@ -69,17 +69,21 @@ public class Program
         #endregion
         Console.WriteLine("Verificando combinações...");
         #region Para cada sequência C25,15 ...
-        foreach (var c25_15_Sequence in results[15].ToArray())
+
+        var doublePercHeuristica = (double)percHeuristica / 100000;
+        var totalLimiteInferior = results[limiteInferior].Count;
+        var combinacaoMaior = results[15].ToList();
+        foreach (var c25_15_Sequence in combinacaoMaior)
         {
             // Heuristica com base na % do grupo preenchido
-            if (((double)percHeuristica / 100000) <= ((double)maxN / results[limiteInferior].Count))
+            if (doublePercHeuristica <= ((double)maxN / totalLimiteInferior))
                 break;
             // Verifique se ela contém alguma sequência C25,14.
             #region count sub-sequences
             // Console.WriteLine($"Verificando combinações agregadas para [{ImprimirListaConjunto(c25_15_Sequence)}]...");
             // heurística para pular a diferença entre os conjuntos, para aumentar a variedade entre as comparações
             // funciona como uma espécie de shuffle
-            if (0 != results[15].ToList().IndexOf(c25_15_Sequence) % limiteInferior)
+            if (0 != combinacaoMaior.IndexOf(c25_15_Sequence) % limiteInferior)
             {
                 continue;
             }
